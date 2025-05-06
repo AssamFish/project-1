@@ -1,0 +1,42 @@
+from flask import Flask, make_response
+from datetime import datetime
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Test Page</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>TEST PAGE</h1>
+        <p>{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>
+        <a href="/login">GO TO LOGIN</a>
+    </body>
+    </html>
+    """
+    response = make_response(html)
+    response.headers['Content-Type'] = 'text/html; charset=utf-8'
+    return response
+
+@app.route('/login')
+def login():
+    return """
+    <!DOCTYPE html>
+    <html>
+    <body>
+        <form method="post">
+            Username: <input type="text" name="username"><br>
+            Password: <input type="password" name="password"><br>
+            <button type="submit">Login</button>
+        </form>
+    </body>
+    </html>
+    """
+
+if __name__ == '__main__':
+    app.run(debug=False, port=5001)  # 更换端口测试
